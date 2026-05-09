@@ -92,7 +92,7 @@ python main.py
 
 Generated plots and figures are automatically saved in the `results/` directory.
 
-**Tested with Python 3.12.11 using Spyder version 6**
+**Tested with Python 3.12.**
 
 ## Usage
 
@@ -106,11 +106,14 @@ Running the simulation produces:
 
 Output figures are saved in the `results/` directory.
 
+## Example output
+![Waveform](results/fig4_mass_variation.png)
+
 ## Key Equations
 
 Chirp mass:
 
-$$M_c = \frac{(m1 m2)^{3/5}}{(m1 + m2)^{1/5}}$$
+$$M_c = \frac{(m_1 m_2)^{3/5}}{(m_1 + m_2)^{1/5}}$$
 
 Frequency evolution:
 
