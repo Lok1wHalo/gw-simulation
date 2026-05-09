@@ -54,32 +54,63 @@ gw-simulation/
 ```
 
 ## Installation
-temp
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Lok1wHalo/gw-simulation.git
+cd gw-simulation
+```
+
+### 2. Create a virtual environment (recommended)
+
+Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+Linux/macOS:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the simulation
+
+```bash
+python main.py
+```
+
+Generated plots and figures are automatically saved in the `results/` directory.
 
 ## Key Equations
 
 Chirp mass:
 
-$$M_c = (m1 m2)^{3/5} / (m1 + m2)^{1/5}$$
+$$M_c = \frac{(m1 m2)^{3/5}}{(m1 + m2)^{1/5}}$$
 
 Frequency evolution:
 
-$$df/dt = (96/5) π^{8/3} (G M_c / c^3)^{5/3}) f^{11/3}$$
+$$\frac{df}{dt} = \frac{96}{5}\pi^{\frac{8}{3}}\left(\frac{G M_c}{c^3}\right)^{\frac{5}{3}} f^{\frac{11}{3}}$$
 
 Strain amplitude:
 
-$$h ~ (G M_c)^{5/3} f^{2/3} / (c^4 d_L)$$
+$$h \propto \frac{(G M_c)^{5/3} f^{2/3}}{c^4 d_L}$$
 
 ## Limitations
 
 This project is intended for educational and research-demonstration purposes.
 
 The simulation uses Newtonian inspiral approximations and does not reproduce the full numerical-relativity waveform used by LIGO/Virgo collaborations.
-
-## Project Structure
-- Simulation.py: The core engine handling the physics of the binary orbit.
-- GravitationalWaves.py: Logic for calculating strain polarizations and wave energy.
-- main.py: Entry point for user configuration and visualization.
 
 ## License
 This project is open-source and available under the MIT License.
