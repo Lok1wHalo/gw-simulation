@@ -92,6 +92,8 @@ python main.py
 
 Generated plots and figures are automatically saved in the `results/` directory.
 
+**Tested with Python 3.12.11 using Spyder version 6**
+
 ## Usage
 
 Running the simulation produces:
