@@ -92,6 +92,18 @@ python main.py
 
 Generated plots and figures are automatically saved in the `results/` directory.
 
+## Usage
+
+Running the simulation produces:
+
+- Binary inspiral evolution
+- Gravitational-wave strain signals
+- Frequency-domain spectra
+- Spectrogram visualizations
+- Comparison plots
+
+Output figures are saved in the `results/` directory.
+
 ## Key Equations
 
 Chirp mass:
