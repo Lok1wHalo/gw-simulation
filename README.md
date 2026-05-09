@@ -1,35 +1,81 @@
 # Gravitational Wave Simulation
 
-A Python-based numerical simulation of Binary Black Hole (BBH) systems and the resulting gravitational radiation. This project models the orbital dynamics of compact binaries and computes the spacetime strain ($h_+$ and $h_\times$) based on the quadrupole formula and Post-Newtonian approximations.
+A Python simulation framework for modelling gravitational waves from compact binary inspirals using Newtonian and quadrupole approximations.
 
-## Features
-- **Inspiral Modeling:** Simulates the shrinking orbit of binary systems due to energy loss via gravitational waves.
-- **Waveform Analysis:** Generates "Chirp" signals showing the evolution of frequency and amplitude over time.
-- **Numerical Relativity:** Uses ODE solvers to track the trajectory of two bodies under mutual gravitational influence.
-- **Visualization:** 2D and 3D plotting of the orbital paths and the resulting gravitational wave strain.
+The project reproduces key observable features of gravitational-wave events such as GW150914, including:
 
-## Mathematical Foundation
-The simulation calculates the gravitational wave strain $h$ using the mass quadrupole moment $Q_{ij}$ of the system:
+- Orbital inspiral
+- Frequency chirp evolution
+- Polarized gravitational-wave strain
+- Spectrogram generation
+- Chirp mass recovery
+- Waveform overlap analysis
+- Comparison with public LIGO data
+  
+## Physical Model
 
-$$h_{ij} = \frac{2G}{c^4 r} \frac{d^2 Q_{ij}}{dt^2}$$
+The simulation models binary black hole inspirals using:
 
-As the black holes orbit closer, the orbital frequency increases, leading to the characteristic increase in signal amplitude and frequency before the final merger.
+- Peters–Mathews gravitational radiation formalism
+- Quadrupole gravitational-wave emission
+- Circular binary approximation
+- Inspiral-only waveform generation
+- ISCO termination condition
+
+The waveform does NOT currently include:
+
+- Merger phase
+- Ringdown phase
+- Spin effects
+- Eccentric orbits
+- Post-Newtonian corrections
+- Detector noise modelling
+
+## Repository Structure
+```
+gw-simulation/
+│
+├── physics/
+│   ├── orbital.py      # Orbital evolution and inspiral dynamics
+│   ├── waveform.py     # GW strain generation
+│   └── spectrum.py     # FFT and spectrogram analysis
+│
+├── analysis/
+│   ├── comparison.py   # Match filtering and parameter recovery
+│   └── gwosc_compare.py# Optional comparison with real LIGO data
+│
+├── plots/
+│   └── visualise.py    # Publication-quality plotting
+│
+├── results/            # Generated figures
+├── main.py             # Main execution script
+├── config.py           # Physical constants and configuration
+└── requirements.txt
+```
 
 ## Installation
-1. Clone this repository:
-```bash
-   git clone https://github.com/Lok1wHalo/gw-simulation.git
-   cd gw-simulation
-   ```
-3. Install the required Python packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-## Usage
-Execute the main script to run the simulation and generate plots:
-   ```bash
-   python main.py
-   ```
+temp
+
+## Key Equations
+
+Chirp mass:
+
+$$M_c = (m1 m2)^{3/5} / (m1 + m2)^{1/5}$$
+
+Frequency evolution:
+
+$$df/dt = (96/5) π^{8/3} (G M_c / c^3)^{5/3}) f^{11/3}$$
+
+Strain amplitude:
+
+$$h ~ (G M_c)^{5/3} f^{2/3} / (c^4 d_L)$$
+
+## Limitations
+
+This project is intended for educational and research-demonstration purposes.
+
+The simulation uses Newtonian inspiral approximations and does not reproduce the full numerical-relativity waveform used by LIGO/Virgo collaborations.
+
 ## Project Structure
 - Simulation.py: The core engine handling the physics of the binary orbit.
 - GravitationalWaves.py: Logic for calculating strain polarizations and wave energy.
