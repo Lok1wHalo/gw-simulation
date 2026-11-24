@@ -2,82 +2,67 @@
 Opcionalni modul za preuzimanje i usporedbu sa stvarnim LIGO strain podacima
 putem javne GWOSC arhive (Gravitational Wave Open Science Center). Zahtijeva
 vanjske pakete gwosc i gwpy koji nisu u standardnom projektnom okruženju —
-instalirati zasebno po potrebi. Vidi odjeljak 3.6 rada.
+instalirati zasebno po potrebi.
 """
 
 import numpy as np
 
 
 def fetch_gw150914(detector="H1", duration=4, sample_rate=4096):
-    """Preuzima strain podatke GW150914 iz javne GWOSC arhive.
-
-    Zahtijeva pakete gwosc i gwpy koji nisu u standardnom projektnom okruženju.
-
-    Dohvaća vremenski segment trajanja duration sekundi centriran oko GPS
-    okidnog vremena GW150914 (1126259462,4 s). Vraća gwpy TimeSeries objekt.
+    """Preuzima strain podatke GW150914 iz javne GWOSC arhive
 
     Args:
         detector:    Identifikator LIGO detektora: "H1" (Hanford) ili
-                     "L1" (Livingston). Zadano "H1".
-        duration:    Ukupno trajanje podatkovnog segmenta [s]. Zadano 4.
-        sample_rate: Izlazna brzina uzorkovanja [Hz]. Zadano 4096.
+                     "L1" (Livingston); Zadano "H1"
+        duration:    Ukupno trajanje podatkovnog segmenta [s]; Zadano 4
+        sample_rate: Izlazna brzina uzorkovanja [Hz]; Zadano 4096
 
     Returns:
-        strain: gwpy TimeSeries sirovih strain podataka.
-        gps:    GPS okidno vrijeme GW150914 [s].
+        strain: gwpy TimeSeries sirovih strain podataka
+        gps:    GPS okidno vrijeme GW150914 [s]
     """
     from gwosc.datasets import event_gps
     from gwpy.timeseries import TimeSeries
 
-    gps    = event_gps("GW150914")
-    start  = gps - duration / 2
-    end    = gps + duration / 2
-    strain = TimeSeries.fetch_open_data(detector, start, end,
-                                        sample_rate=sample_rate)
+    gps = event_gps("GW150914")
+    start = gps - duration / 2
+    end = gps + duration / 2
+    strain = TimeSeries.fetch_open_data(detector, start, end, sample_rate=sample_rate)
     return strain, gps
 
 
 def bandpass_filter(strain, flow=20, fhigh=400):
-    """Primjenjuje pojasno-propusni filtar na LIGO strain podatke.
-
-    Zadržava signal u frekvencijskom pojasu [flow, fhigh] Hz i prigušuje
-    sve izvan njega. Time se potiskuje seizmički zid na niskim frekvencijama
-    i šum snimke na visokim frekvencijama, čime chirp gravitacijskih valova
-    postaje vidljiv u vremenskoj domeni.
+    """Smanjuje šum - zadržava signal u frekvencijskom pojasu (flow, fhigh)
 
     Args:
-        strain: gwpy TimeSeries sirovih LIGO strain podataka.
-        flow:   Donja frekvencija pojasnog propusnika [Hz]. Zadano 20.
-        fhigh:  Gornja frekvencija pojasnog propusnika [Hz]. Zadano 400.
+        strain: gwpy TimeSeries sirovih LIGO strain podataka
+        flow:   Donja frekvencija pojasnog propusnika [Hz]; Zadano 20
+        fhigh:  Gornja frekvencija pojasnog propusnika [Hz]; Zadano 400
 
     Returns:
-        Pojasno-filtrirani gwpy TimeSeries.
+        Filtrirani gwpy TimeSeries
     """
     return strain.bandpass(flow, fhigh)
 
 
 def plot_comparison(strain_data, h_theory, t_theory, gps, output_path="results/fig_gwosc_comparison.png"):
-    """Prekriva LIGO opaženi strain s teorijskim valnim oblikom.
-
+    """Prekriva LIGO opaženi strain s teorijskim valnim oblikom
+    
     Generira jednoplohu vremensku usporedbu. LIGO podaci prikazani su sivom
     bojom; Newtonov ulazni valni oblik preklopljen je plavom bojom. Oboje su
-    skalirani na jedinice 10⁻²¹ radi čitljivosti. Vremenska os referira se
-    na spajanje (t = 0 na kraju h_theory).
-
-    Napomena: Newtonov valni oblik ne uključuje ringdown nakon spajanja, pa
-    se slaganje očekuje samo za vrijeme ulaznog chirpa, a ne nakon t ≈ 0.
+    skalirani na jedinice 10⁻²¹ radi čitljivosti.
 
     Args:
-        strain_data: Pojasno-filtrirani gwpy TimeSeries (H1 podaci).
-        h_theory:    Teorijski strain h₊(t) kao numpy polje [bezdimenzionalno].
-        t_theory:    Polje vremena za teorijski valni oblik [s].
+        strain_data: Pojasno-filtrirani gwpy TimeSeries (H1 podaci)
+        h_theory:    Teorijski strain h₊(t) kao numpy polje [0-dimenzionalno]
+        t_theory:    Polje vremena za teorijski valni oblik [s]
         gps:         GPS okidno vrijeme GW150914; koristi se za poravnanje
-                     LIGO vremenske osi [s].
-        output_path: Putanja za pohranu slike. Zadano
-                     results/fig_gwosc_comparison.png.
+                     LIGO vremenske osi [s].+
+        output_path: Putanja za pohranu slike (zadano)
+                     results/fig_gwosc_comparison.png
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     import matplotlib
     matplotlib.use("Agg")
@@ -110,7 +95,8 @@ def plot_comparison(strain_data, h_theory, t_theory, gps, output_path="results/f
 
 
 def run():
-    """Pokreće cjeloviti GWOSC tijek usporedbe: preuzimanje → filtriranje → valni oblik → slika."""
+    """Pokreće cjeloviti GWOSC tijek usporedbe: preuzimanje -> filtriranje -> valni oblik -> slika."""
+    
     import sys, os
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
