@@ -1,7 +1,7 @@
 """
-Slike publiciranog kvaliteta za simulaciju GW150914. Generira osam slika
-(fig1–fig8) pohranjenih u results/. Koristi matplotlib sa serifnim fontovima
-i izlaznom rezolucijom 150 dpi.
+Slike publiciranog kvaliteta za simulaciju GW150914. 
+Generira osam slika (fig1–fig8) pohranjenih u results/. 
+Koristi matplotlib sa serifnim fontovima i izlaznom rezolucijom 150 dpi.
 """
 
 import numpy as np
@@ -30,14 +30,14 @@ plt.rcParams.update({
 
 
 def _save(fig, name):
-    """Pohrani figuru u results/ i zatvori je.
+    """Pohrani figuru u results/ i zatvori je
 
     Args:
-        fig:  matplotlib Figure objekt.
-        name: Naziv izlazne datoteke (npr. "fig1_orbital_decay.png").
+        fig:  matplotlib Figure objekt
+        name: Naziv izlazne datoteke
 
     Returns:
-        Apsolutna putanja do pohranjene datoteke.
+        Apsolutna putanja do pohranjene datoteke
     """
     path = os.path.join(RESULTS, name)
     fig.savefig(path, bbox_inches="tight")
@@ -49,18 +49,20 @@ def _save(fig, name):
 def plot_orbital_decay(t, f, sep_m, label="GW150914"):
     """Prikazuje orbitalnu separaciju i frekvenciju GW nasuprot vremenu do spajanja.
 
-    Dvo-plošna slika. Gornja plosa: orbitalna separacija a(t) [km]. Donja
-    plosa: frekvencija GW f(t) [Hz]. Vremenska os referira se na trenutak
-    spajanja (t = 0). Pohranjuje fig1_orbital_decay.png.
+    Slika od dva grafa.
+    Gornji graf: orbitalna separacija a(t) [km].
+    Donji graf: frekvencija GW f(t) [Hz].
+    Vremenska os referira se na trenutak spajanja (t = 0).
+    Pohranjuje fig1_orbital_decay.png.
 
     Args:
-        t:     Polje vremena [s].
-        f:     Polje frekvencije GW [Hz].
-        sep_m: Polje orbitalne separacije [m].
-        label: Oznaka za naslov slike.
+        t:     Polje vremena [s]
+        f:     Polje frekvencije GW [Hz]
+        sep_m: Polje orbitalne separacije [m]
+        label: Oznaka za naslov slike
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
     fig.suptitle(f"Orbitalna evolucija — {label}", fontsize=13)
@@ -80,19 +82,20 @@ def plot_orbital_decay(t, f, sep_m, label="GW150914"):
 
 
 def plot_waveform(t, h_plus, h_cross, label="GW150914"):
-    """Prikazuje dva polarizacijska straina gravitacijskih valova h₊(t) i h×(t).
+    """Prikazuje dva polarizacijska straina gravitacijskih valova h₊(t) i h×(t)
 
-    Dvo-plošna slika. Strain skaliran na jedinice 10⁻²¹. Vremenska os referira
-    se na spajanje. Pohranjuje fig2_waveform.png.
+    Strain skaliran na jedinice 10⁻²¹. 
+    Vremenska os referira se na spajanje. 
+    Pohranjuje fig2_waveform.png.
 
     Args:
-        t:       Polje vremena [s].
-        h_plus:  Plus polarizacijski strain h₊(t) [bezdimenzionalno].
-        h_cross: Križni polarizacijski strain h×(t) [bezdimenzionalno].
-        label:   Oznaka za naslov slike.
+        t:       Polje vremena [s]
+        h_plus:  Plus polarizacijski strain h₊(t) [bezdimenzionalno]
+        h_cross: Križni polarizacijski strain h×(t) [bezdimenzionalno]
+        label:   Oznaka za naslov slike
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     fig, axes = plt.subplots(2, 1, figsize=(10, 5), sharex=True)
     fig.suptitle(f"Naprezanje gravitacijskog vala — {label}", fontsize=13)
@@ -115,19 +118,19 @@ def plot_waveform(t, h_plus, h_cross, label="GW150914"):
 def plot_spectrogram(t, h, sample_rate, label="GW150914"):
     """Prikazuje vremensko-frekvencijski spektrogram od h₊ koristeći STFT.
 
-    Skala boja: log₁₀(spektralna gustoća snage). Frekvencijski raspon
-    10–500 Hz. Prikazuje rastuć chirp trag od ~20 Hz do ~150 Hz karakterističan
-    za ulazak u spiralu. Pohranjuje fig3_spectrogram.png.
+    Skala boja: log₁₀(spektralna gustoća snage). 
+    Frekvencijski raspon 10–500 Hz. 
+    Prikazuje rastuć chirp trag od ~20 Hz do ~150 Hz.
+    Pohranjuje fig3_spectrogram.png.
 
     Args:
-        t:           Polje vremena valnog oblika [s] (koristi se za postavljanje
-                     osi).
-        h:           Plus polarizacijski strain [bezdimenzionalno].
-        sample_rate: Brzina uzorkovanja [Hz].
-        label:       Oznaka za naslov slike.
+        t:           Polje vremena valnog oblika [s]
+        h:           Plus polarizacijski strain [0-dimenzionalno]
+        sample_rate: Brzina uzorkovanja [Hz]
+        label:       Oznaka za naslov slike
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     from physics.spectrum import compute_spectrogram
 
@@ -152,17 +155,16 @@ def plot_spectrogram(t, h, sample_rate, label="GW150914"):
 
 
 def plot_mass_variation(variants_data):
-    """Prikazuje h₊(t) za svaku varijantu mase na zasebnim plohama.
+    """Prikazuje h₊(t) za svaku varijantu mase na zasebnim plohama
 
-    Ilustrira kako ukupna masa sustava kontrolira trajanje valnog oblika i
-    frekvencijski raspon: teži sustavi spajaju se ranije i pri nižim
-    frekvencijama. Pohranjuje fig4_mass_variation.png.
+    Ilustrira kako ukupna masa sustava kontrolira trajanje valnog oblika i frekvencijski raspon: teži sustavi spajaju se ranije i pri nižim frekvencijama. 
+    Pohranjuje fig4_mass_variation.png.
 
     Args:
-        variants_data: Lista (t, h_plus, label) torki, jedna po varijanti mase.
+        variants_data: Lista (t, h_plus, label); jedna po varijanti mase
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     fig, axes = plt.subplots(len(variants_data), 1,
                              figsize=(10, 2.5 * len(variants_data)),
@@ -185,17 +187,17 @@ def plot_mass_variation(variants_data):
 
 
 def plot_distance_variation(distances_mpc, peak_strains):
-    """Prikazuje vršni strain h_peak nasuprot luminoznoj udaljenosti na log-log osiima.
+    """Prikazuje vršni strain h_peak nasuprot luminoznoj udaljenosti na log-log osiima
 
-    Prekriva teorijski trend h ∝ 1/d isprekidanom linijom i anotira točku
-    koja odgovara GW150914. Pohranjuje fig5_distance_variation.png.
+    Prekriva teorijski trend h ∝ 1/d isprekidanom linijom i anotira točku koja odgovara GW150914. 
+    Pohranjuje fig5_distance_variation.png.
 
     Args:
-        distances_mpc: Lista luminoznih udaljenosti [Mpc].
-        peak_strains:  Lista vršnih straina pri ISCO-u [bezdimenzionalno].
+        distances_mpc: Lista luminoznih udaljenosti [Mpc]
+        peak_strains:  Lista vršnih straina pri ISCO-u [0-dimenzionalno]
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     fig, ax = plt.subplots(figsize=(7, 5))
     ax.plot(distances_mpc, np.array(peak_strains) * 1e21, "o-", color="steelblue", ms=5)
@@ -221,18 +223,16 @@ def plot_distance_variation(distances_mpc, peak_strains):
 
 
 def plot_chirp_mass_panel(mc_values_msun, freq_data):
-    """Prikazuje evoluciju frekvencije GW f(t) za više chirp masa na jednoj plosi.
+    """Prikazuje evoluciju frekvencije GW f(t) za više chirp masa na jednoj plosi
 
-    Ilustrira kako teži sustavi (veća chirp masa) spajaju se brže i pri nižim
-    frekvencijama — strmeji nagib f(t) krivulje odgovara brže rastućoj
-    frekvenciji. Pohranjuje fig6_chirp_mass_panel.png.
+    Pohranjuje fig6_chirp_mass_panel.png.
 
     Args:
-        mc_values_msun: Lista chirp masa [sunčeve mase].
-        freq_data:      Lista (t, f, label) torki, jedna po varijanti.
+        mc_values_msun: Lista chirp masa [sunčeve mase]
+        freq_data:      Lista (t, f, label); jedna po varijanti
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     fig, ax = plt.subplots(figsize=(9, 5))
     ax.set_title("Evolucija frekvencije za različite čirp-mase", fontsize=13)
@@ -252,19 +252,17 @@ def plot_chirp_mass_panel(mc_values_msun, freq_data):
 
 
 def plot_inclination_effects(iota_deg_arr, hplus_max_arr, hcross_max_arr):
-    """Prikazuje maksimalnu amplitudu straina h₊ i h× kao funkciju kuta inklinacije ι.
+    """Prikazuje maksimalnu amplitudu straina h₊ i h× kao funkciju kuta inklinacije ι
 
-    Ilustrira geometrijsku ovisnost: h₊ je maksimalan pri ι = 0° (lice-prema-
-    promatraču) i jednak nuli pri ι = 90° × sqrt(2) faktoru; h× iščezava pri
-    ι = 0° i 180°. Pohranjuje fig7_inclination_effects.png.
+    Pohranjuje fig7_inclination_effects.png.
 
     Args:
-        iota_deg_arr:   Lista kutova inklinacije [stupnjevi].
-        hplus_max_arr:  Lista maksimalnih vrijednosti |h₊| [bezdimenzionalno].
-        hcross_max_arr: Lista maksimalnih vrijednosti |h×| [bezdimenzionalno].
+        iota_deg_arr:   Lista kutova inklinacije [stupnjevi]
+        hplus_max_arr:  Lista maksimalnih vrijednosti |h₊| [0-dimenzionalno]
+        hcross_max_arr: Lista maksimalnih vrijednosti |h×| [0-dimenzionalno]
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     fig, ax = plt.subplots(figsize=(7, 5))
     ax.plot(iota_deg_arr, np.array(hplus_max_arr) * 1e21, "o-",
@@ -281,19 +279,18 @@ def plot_inclination_effects(iota_deg_arr, hplus_max_arr, hcross_max_arr):
 
 
 def plot_parameter_comparison(theory_dict, observed_dict):
-    """Grupirani stupčani dijagram koji uspoređuje simulacijom predviđene nasuprot LIGO opaženim parametrima.
+    """Grupirani stupčani dijagram koji uspoređuje simulacijom predviđene nasuprot LIGO opaženim parametrima
 
-    Uspoređuje M_c, f_isco i h_peak. Postotna razlika između simulacije i
-    opažanja anotirana je iznad svake grupe stupaca. Pohranjuje
-    fig8_parameter_comparison.png.
+    Uspoređuje M_c, f_isco i h_peak. 
+    Postotna razlika između simulacije i opažanja anotirana je iznad svake grupe stupaca. 
+    Pohranjuje fig8_parameter_comparison.png.
 
     Args:
-        theory_dict:   Rječnik {oznaka_parametra: vrijednost} za simulaciju.
-        observed_dict: Rječnik {oznaka_parametra: vrijednost} za LIGO opažanje.
-                       Isti ključevi kao theory_dict.
+        theory_dict:   Rječnik {oznaka_parametra: vrijednost} za simulaciju
+        observed_dict: Rječnik {oznaka_parametra: vrijednost} za LIGO opažanje; isti ključevi kao theory_dict
 
     Returns:
-        Putanja do pohranjene slike.
+        Putanja do pohranjene slike
     """
     keys   = list(theory_dict.keys())
     t_vals = [theory_dict[k]  for k in keys]
